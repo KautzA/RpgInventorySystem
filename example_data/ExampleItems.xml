@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+
+<rpgitemgrid
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="rpgitemgrid.xsd">
+	<itemname>David Armitage</itemname>
+	<itemdescription>A GOOlock PC</itemdescription>
+	<link/>
+	<stacksize/>
+	<weightvalue>145</weightvalue>
+	<weightunit/>
+	<contentsweightscale/>
+	<rpgitemgrid>
+		<itemname>BookHolster</itemname>
+		<itemdescription>A simple under arm book holster</itemdescription>
+		<link/>
+		<stacksize/>
+		<weightvalue>0.5</weightvalue>
+		<weightunit/>
+		<contentsweightscale/>
+		<rpgitemgrid>
+			<itemname>Book of Ancient Secrets</itemname>
+			<itemdescription>An old looking book bound magically to David Armitage as part of his pact.</itemdescription>
+			<link/>
+			<stacksize/>
+			<weightvalue>5</weightvalue>
+			<weightunit/>
+			<contentsweightscale/>
+			<rpgitemgrid>
+				<itemname>Portable Hole</itemname>
+				<itemdescription>A portable hole that must be unrolled to access its contents</itemdescription>
+				<link/>
+				<stacksize/>
+				<weightvalue>0.5</weightvalue>
+				<weightunit/>
+				<contentsweightscale/>
+				<externaloffset>
+					<x>0</x><y>0</y>
+				</externaloffset>
+				<externalpoints>
+					<coordinate><x>0</x><y>0</y></coordinate>
+				</externalpoints>
+				<internalpoints>
+					<coordinate><x>0</x><y>0</y></coordinate>
+					<coordinate><x>1</x><y>0</y></coordinate>
+					<coordinate><x>2</x><y>0</y></coordinate>
+					<coordinate><x>3</x><y>0</y></coordinate>
+					<coordinate><x>4</x><y>0</y></coordinate>
+				</internalpoints>
+			</rpgitemgrid>
+			<externaloffset>
+				<x>0</x><y>0</y>
+			</externaloffset>
+			<externalpoints>
+				<coordinate><x>0</x><y>0</y></coordinate>
+			</externalpoints>
+			<internalpoints>
+				<coordinate><x>0</x><y>0</y></coordinate>
+			</internalpoints>
+		</rpgitemgrid>
+		<rpgitemgrid>
+			<itemname>Necromomicon</itemname>
+			<itemdescription>A hand-copied version of the Necronomicon that David made</itemdescription>
+			<link/>
+			<stacksize/>
+			<weightvalue>5</weightvalue>
+			<weightunit/>
+			<contentsweightscale/>
+			<externaloffset>
+				<x>0</x><y>0</y>
+			</externaloffset>
+			<externalpoints>
+				<coordinate><x>0</x><y>0</y></coordinate>
+			</externalpoints>
+		</rpgitemgrid>
+		<externaloffset>
+			<x>0</x><y>0</y>
+		</externaloffset>
+		<externalpoints>
+			<coordinate><x>0</x><y>0</y></coordinate>
+			<coordinate><x>2</x><y>0</y></coordinate>
+		</externalpoints>
+		<internalpoints>
+			<coordinate><x>0</x><y>0</y></coordinate>
+			<coordinate><x>2</x><y>0</y></coordinate>
+		</internalpoints>
+	</rpgitemgrid>
+	<externaloffset>
+		<x>0</x><y>0</y>
+	</externaloffset>
+	<externalpoints>
+			<coordinate><x>0</x><y>0</y></coordinate>
+			<coordinate><x>1</x><y>0</y></coordinate>
+			<coordinate><x>2</x><y>0</y></coordinate>
+			<coordinate><x>3</x><y>0</y></coordinate>
+			<coordinate><x>0</x><y>1</y></coordinate>
+			<coordinate><x>1</x><y>1</y></coordinate>
+			<coordinate><x>2</x><y>1</y></coordinate>
+			<coordinate><x>3</x><y>1</y></coordinate>
+			<coordinate><x>0</x><y>2</y></coordinate>
+			<coordinate><x>1</x><y>2</y></coordinate>
+			<coordinate><x>2</x><y>2</y></coordinate>
+			<coordinate><x>3</x><y>2</y></coordinate>
+			<coordinate><x>0</x><y>3</y></coordinate>
+			<coordinate><x>1</x><y>3</y></coordinate>
+			<coordinate><x>2</x><y>3</y></coordinate>
+			<coordinate><x>3</x><y>3</y></coordinate>
+	</externalpoints>
+	<internalpoints>
+			<coordinate><x>0</x><y>0</y></coordinate>
+			<coordinate><x>1</x><y>0</y></coordinate>
+			<coordinate><x>2</x><y>0</y></coordinate>
+			<coordinate><x>3</x><y>0</y></coordinate>
+			<coordinate><x>0</x><y>1</y></coordinate>
+			<coordinate><x>1</x><y>1</y></coordinate>
+			<coordinate><x>2</x><y>1</y></coordinate>
+			<coordinate><x>3</x><y>1</y></coordinate>
+			<coordinate><x>0</x><y>2</y></coordinate>
+			<coordinate><x>1</x><y>2</y></coordinate>
+			<coordinate><x>2</x><y>2</y></coordinate>
+			<coordinate><x>3</x><y>2</y></coordinate>
+			<coordinate><x>0</x><y>3</y></coordinate>
+			<coordinate><x>1</x><y>3</y></coordinate>
+			<coordinate><x>2</x><y>3</y></coordinate>
+			<coordinate><x>3</x><y>3</y></coordinate>
+	</internalpoints>
+</rpgitemgrid>
