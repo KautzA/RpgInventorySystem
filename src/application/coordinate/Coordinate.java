@@ -26,4 +26,12 @@ public class Coordinate {
 		return new Coordinate(this.x - other.x,
 				  			  this.y - other.y);
 	}
+	
+	public boolean equals(Object other) {
+		if (other instanceof Coordinate) {
+			Coordinate otherCoord = (Coordinate)other;
+			return (otherCoord.x == this.x) && (otherCoord.y == this.y);
+		}
+		return false;
+	}
 }
