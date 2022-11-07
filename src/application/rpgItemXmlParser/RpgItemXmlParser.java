@@ -18,6 +18,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.dom.DOMSource;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -40,7 +41,7 @@ public class RpgItemXmlParser {
 		xmlDocument.appendChild(ItemToNode(item, xmlDocument));
 		
 		try {
-            Source source = new DOMSource(xmlDoc);
+            Source source = new DOMSource(xmlDocument);
             StreamResult result = new StreamResult(new OutputStreamWriter(
                     outputStream, "ISO-8859-1"));
             Transformer xformer = TransformerFactory.newInstance().newTransformer();
@@ -50,8 +51,8 @@ public class RpgItemXmlParser {
         }
 	}
 	
-	public static void saveXmlToFile(RpgItem item, String filepath) {
-        OutputStream xmlFile = new File("yourFile.xml");
+	public static void saveXmlToFile(RpgItem item, String filepath) throws FileNotFoundException, ParserConfigurationException {
+        OutputStream xmlFile = new FileOutputStream(filepath);
         saveXML(item, xmlFile);
 		
 	}
