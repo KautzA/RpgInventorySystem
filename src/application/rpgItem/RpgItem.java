@@ -3,6 +3,7 @@ package application.rpgItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import application.coordinate.Coordinate;
@@ -102,5 +103,12 @@ public class RpgItem {
 	
 	public IItemWeight getGetSingleWeight() {
 		return this.weight.add(this.getContentsScaledWeight());
+	}
+	
+	public List<Coordinate> getOccupiedPoints() {
+		ArrayList<Coordinate> result = new ArrayList<Coordinate>();
+		for (Coordinate point : this.externalPoints)
+			result.add(this.externalOffset.add(this.externalRotation.rotateCoordinate(point)));
+		return result;
 	}
 }
