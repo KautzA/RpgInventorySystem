@@ -3,6 +3,7 @@ package application.rpgItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import application.coordinate.Coordinate;
@@ -49,11 +50,11 @@ public class RpgItem {
 				   int stackSize,
 				   IItemWeight weight, 
 				   float contentsWeightScale,
-				   ArrayList<RpgItem> contents,
+				   List<RpgItem> contents,
 				   Coordinate externalOffset,
 				   Rotation externalRotation,
-				   ArrayList<Coordinate> externalPoints,
-				   ArrayList<Coordinate> internalPoints
+				   List<Coordinate> externalPoints,
+				   List<Coordinate> internalPoints
 				   ) {
 		this.uuid = UUID.randomUUID();
 		this.name = name;
@@ -102,5 +103,27 @@ public class RpgItem {
 	
 	public IItemWeight getGetSingleWeight() {
 		return this.weight.add(this.getContentsScaledWeight());
+	}
+	
+	public boolean equals(Object other) {
+		if (other instanceof RpgItem) {
+			RpgItem otherItem = (RpgItem)other;
+			if (!this.name.equals(otherItem.name)) { return false; }
+			if (!this.description.equals(otherItem.description)) { return false; }
+			if (!this.link.equals(otherItem.link)) { return false; }
+			if (this.stackSize != otherItem.stackSize) { return false; }
+			if (!this.weight.equals(otherItem.weight)) { return false; }
+			if (this.contentsWeightScale != otherItem.contentsWeightScale) { return false; }
+			if (!this.contents.equals(otherItem.contents)) { return false; } // requires contents in the same order
+			if (!this.externalOffset.equals(otherItem.externalOffset)) { return false; }
+			if (!this.externalRotation.equals(otherItem.externalRotation)) { return false; }
+			if (!this.externalPoints.containsAll(otherItem.externalPoints)
+				|| !otherItem.externalPoints.containsAll(this.externalPoints)) { return false; }
+			if (!this.internalPoints.containsAll(otherItem.internalPoints)
+					|| !otherItem.internalPoints.containsAll(this.internalPoints)) { return false; }
+			
+			return true;
+		}
+		return false;
 	}
 }
