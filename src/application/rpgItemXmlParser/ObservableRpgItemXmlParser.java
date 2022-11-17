@@ -209,8 +209,10 @@ public class ObservableRpgItemXmlParser {
 		result.appendChild(CreateTextNode("weightunit", item.getWeight().getUnits(), parentXml));
 		result.appendChild(CreateTextNode("weightvalue", String.valueOf(item.getWeight().getValue()), parentXml));
 		result.appendChild(CreateTextNode("contentsweightscale", String.valueOf(item.getContentsWeightScale()), parentXml));
-		for (ObservableRpgItem child_item : item.getContents()) {
-			result.appendChild(ItemToNode(child_item, parentXml));
+		if (item.getContents() != null) {
+			for (ObservableRpgItem child_item : item.getContents()) {
+				result.appendChild(ItemToNode(child_item, parentXml));
+			}
 		}
 		result.appendChild(CoordinateToNode("externaloffset", item.getExternalOffset(), parentXml));
 		result.appendChild(RotationToNode("externalrotation", item.getExternalRotation(), parentXml));
