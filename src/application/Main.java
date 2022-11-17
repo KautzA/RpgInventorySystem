@@ -13,6 +13,8 @@ import application.rpgItemXmlParser.RpgItemXmlParser;
 import application.textTreeView.TextTreeView;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -35,15 +37,31 @@ public class Main extends Application {
 	final ObjectProperty<RpgItem> rootRpgItem;
 	final ObjectProperty<RpgItem> activeRpgItem;
 	
+	
 	public Main() {
 		RpgItem rootItem = new RpgItem("Default Item", new ItemWeightKg(1), new Coordinate(0,0), CardinalRotation.ZERO);
 		this.rootRpgItem = new SimpleObjectProperty<RpgItem>(this, "rootRpgItem", rootItem);
 		this.activeRpgItem = new SimpleObjectProperty<RpgItem>(this, "activeRpgItem", rootItem);
+		
+		this.rootRpgItem.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable arg0) {
+				System.out.println("Main rootItem changed, now " + rootRpgItem.get().name);
+			}
+		});
 	}
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			final FileChooser fileChooser = new FileChooser();
+			
+			//Configure the text window
+			Stage textWindow = makeTextView();
+			textWindow.initOwner(primaryStage);
+			
+			
+			
 			primaryStage.setTitle("RpgInventorySystem");
 			// Close the application when the main window is closed
 			primaryStage.setOnCloseRequest( new EventHandler<WindowEvent>() {
@@ -54,8 +72,7 @@ public class Main extends Application {
 				}
 			});
 
-			Stage textWindow = makeTextView();
-			textWindow.initOwner(primaryStage);
+			
 			VBox root = new VBox();
 			HBox banner = new HBox();
 			root.getChildren().add(banner);
@@ -84,7 +101,7 @@ public class Main extends Application {
 						try {
 							rootRpgItem.set(RpgItemXmlParser.parseXML(new FileInputStream(file)));
 							System.out.println("Loaded RpgItem with name = " + rootRpgItem.get().name);
-							root.getChildren().add(new TextTreeView(rootRpgItem.getValue()));
+							//root.getChildren().add(new TextTreeView(rootRpgItem.getValue()));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -144,13 +161,18 @@ public class Main extends Application {
 	Stage makeTextView() {
 		Stage textView = new Stage();
 		textView.setTitle("Text view of \"" + rootRpgItem.get().name + "\"");
-		
+		this.rootRpgItem.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable arg0) {
+				textView.setTitle("Text view of \"" + rootRpgItem.get().name + "\"");
+			}
+		});
 		
 		ScrollPane root = new ScrollPane();
 		root.setFitToWidth(true);
 		TextTreeView contents = new TextTreeView(rootRpgItem.get());
 		contents.rootItemProperty().bindBidirectional(rootRpgItem);
-		root.setContent(new TextTreeView(rootRpgItem.get()));
+		root.setContent(contents);
 		
 		Scene scene = new Scene(root);
 		textView.setScene(scene);

@@ -39,12 +39,14 @@ public class TextTreeView extends StackPane {
 		rootItem.addListener(new InvalidationListener() {
 			@Override
 			public void invalidated(Observable arg0) {
+				System.out.println("TextTreeView root item changed. now " + rootItem.get().name);
 				UpdateTextTreeView(rootItem.get());
 			}
 		});
 	}
 
 	protected void UpdateTextTreeView(RpgItem item) {
+		System.out.println("UpdateTextTreeView called with item named " + item.name + ", root item named " + rootItem.get().name);
 		rootPane.setText(Integer.toString(rootItem.get().stackSize) + "X \"" +
 				rootItem.get().name + "\", " + rootItem.get().weight.getValue());
 		VBox contents = new VBox();
