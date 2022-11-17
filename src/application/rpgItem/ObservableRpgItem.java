@@ -210,7 +210,7 @@ public class ObservableRpgItem {
 		this.stackSize = new SimpleIntegerProperty(stackSize);
 		this.weight = new SimpleObjectProperty<IItemWeight>(weight);
 		this.contentsWeightScale = new SimpleFloatProperty(contentsWeightScale);
-		this.contents = new SimpleListProperty<ObservableRpgItem>();
+		this.contents = new SimpleListProperty<ObservableRpgItem>(contents);
 		this.externalOffset = new SimpleObjectProperty<Coordinate>(externalOffset);
 		this.externalRotation = new SimpleObjectProperty<Rotation>(externalRotation);
 		this.externalPoints = new SimpleListProperty<Coordinate>(externalPoints);
@@ -220,14 +220,14 @@ public class ObservableRpgItem {
 	public ObservableRpgItem(String name, String description, String link, int stackSize, IItemWeight weight,
 			float contentsWeightScale, List<ObservableRpgItem> contents, Coordinate externalOffset,
 			Rotation externalRotation, List<Coordinate> externalPoints, List<Coordinate> internalPoints) {
-		this(name, description, link, stackSize, weight, contentsWeightScale, FXCollections.observableList(contents), externalOffset,
-				externalRotation, FXCollections.observableList(externalPoints),
+		this(name, description, link, stackSize, weight, contentsWeightScale, FXCollections.observableList(contents),
+				externalOffset, externalRotation, FXCollections.observableList(externalPoints),
 				FXCollections.observableList(internalPoints));
 	}
 
 	public ObservableRpgItem(String name, IItemWeight weight, Coordinate offset, Rotation rotation) {
-		this(name, "", "", 1, weight, (float) 1.0, FXCollections.observableList(new ArrayList<ObservableRpgItem>()), offset,
-				rotation, FXCollections.observableList(Arrays.asList(new Coordinate(0, 0))),
+		this(name, "", "", 1, weight, (float) 1.0, FXCollections.observableList(new ArrayList<ObservableRpgItem>()),
+				offset, rotation, FXCollections.observableList(Arrays.asList(new Coordinate(0, 0))),
 				FXCollections.observableList(new ArrayList<Coordinate>()));
 	}
 
@@ -251,84 +251,84 @@ public class ObservableRpgItem {
 	public boolean equals(Object other) {
 		if (other instanceof ObservableRpgItem) {
 			ObservableRpgItem otherItem = (ObservableRpgItem) other;
-			if (!this.name.equals(otherItem.name)) {
+			if (!this.getName().equals(otherItem.getName())) {
 				return false;
 			}
-			if (!this.description.equals(otherItem.description)) {
+			if (!this.getDescription().equals(otherItem.getDescription())) {
 				return false;
 			}
-			if (!this.link.equals(otherItem.link)) {
+			if (!this.getLink().equals(otherItem.getLink())) {
 				return false;
 			}
-			if (this.stackSize != otherItem.stackSize) {
+			if (this.getStackSize() != otherItem.getStackSize()) {
 				return false;
 			}
-			if (!this.weight.equals(otherItem.weight)) {
+			if (!this.getWeight().equals(otherItem.getWeight())) {
 				return false;
 			}
-			if (this.contentsWeightScale != otherItem.contentsWeightScale) {
+			if (this.getContentsWeightScale() != otherItem.getContentsWeightScale()) {
 				return false;
 			}
-			if (!this.contents.equals(otherItem.contents)) {
+			if (!this.getContents().equals(otherItem.getContents())) {
 				return false;
 			} // requires contents in the same order
-			if (!this.externalOffset.equals(otherItem.externalOffset)) {
+			if (!this.getExternalOffset().equals(otherItem.getExternalOffset())) {
 				return false;
 			}
-			if (!this.externalRotation.equals(otherItem.externalRotation)) {
+			if (!this.getExternalRotation().equals(otherItem.getExternalRotation())) {
 				return false;
 			}
-			if (!this.externalPoints.containsAll(otherItem.externalPoints)
-					|| !otherItem.externalPoints.containsAll(this.externalPoints)) {
+			if (!this.getExternalPoints().containsAll(otherItem.getExternalPoints())
+					|| !otherItem.getExternalPoints().containsAll(this.getExternalPoints())) {
 				return false;
 			}
-			if (!this.internalPoints.containsAll(otherItem.internalPoints)
-					|| !otherItem.internalPoints.containsAll(this.internalPoints)) {
+			if (!this.getInternalPoints().containsAll(otherItem.getInternalPoints())
+					|| !otherItem.getInternalPoints().containsAll(this.getInternalPoints())) {
 				return false;
 			}
 
 			return true;
 		}
-		if (other instanceof RpgItem) {
-			RpgItem otherItem = (RpgItem) other;
-			if (!this.getName().equals(otherItem.name)) {
-				return false;
-			}
-			if (!this.getDescription().equals(otherItem.description)) {
-				return false;
-			}
-			if (!this.getLink().equals(otherItem.link)) {
-				return false;
-			}
-			if (this.getStackSize() != otherItem.stackSize) {
-				return false;
-			}
-			if (!this.getWeight().equals(otherItem.weight)) {
-				return false;
-			}
-			if (this.getContentsWeightScale() != otherItem.contentsWeightScale) {
-				return false;
-			}
-			if (!this.getContents().equals(otherItem.contents)) {
-				return false;
-			} // requires contents in the same order
-			if (!this.getExternalOffset().equals(otherItem.externalOffset)) {
-				return false;
-			}
-			if (!this.getExternalRotation().equals(otherItem.externalRotation)) {
-				return false;
-			}
-			if (!this.getExternalPoints().containsAll(otherItem.externalPoints)
-					|| !otherItem.externalPoints.containsAll(this.getExternalPoints())) {
-				return false;
-			}
-			if (!this.getInternalPoints().containsAll(otherItem.internalPoints)
-					|| !otherItem.internalPoints.containsAll(this.getInternalPoints())) {
-				return false;
-			}
-
-			return true;
-		}
+//		if (other instanceof RpgItem) {
+//			RpgItem otherItem = (RpgItem) other;
+//			if (!this.getName().equals(otherItem.name)) {
+//				return false;
+//			}
+//			if (!this.getDescription().equals(otherItem.description)) {
+//				return false;
+//			}
+//			if (!this.getLink().equals(otherItem.link)) {
+//				return false;
+//			}
+//			if (this.getStackSize() != otherItem.stackSize) {
+//				return false;
+//			}
+//			if (!this.getWeight().equals(otherItem.weight)) {
+//				return false;
+//			}
+//			if (this.getContentsWeightScale() != otherItem.contentsWeightScale) {
+//				return false;
+//			}
+//			if (!this.getContents().equals(otherItem.contents)) {
+//				return false;
+//			} // requires contents in the same order
+//			if (!this.getExternalOffset().equals(otherItem.externalOffset)) {
+//				return false;
+//			}
+//			if (!this.getExternalRotation().equals(otherItem.externalRotation)) {
+//				return false;
+//			}
+//			if (!this.getExternalPoints().containsAll(otherItem.externalPoints)
+//					|| !otherItem.externalPoints.containsAll(this.getExternalPoints())) {
+//				return false;
+//			}
+//			if (!this.getInternalPoints().containsAll(otherItem.internalPoints)
+//					|| !otherItem.internalPoints.containsAll(this.getInternalPoints())) {
+//				return false;
+//			}
+//
+//			return true;
+//		}
 		return false;
 	}
 }
