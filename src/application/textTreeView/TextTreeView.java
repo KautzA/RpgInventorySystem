@@ -1,8 +1,7 @@
 package application.textTreeView;
 
-import application.rpgItem.ObservableRpgItem;
+import application.rpgItem.RpgItem;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.beans.InvalidationListener;
@@ -10,52 +9,44 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class TextTreeView extends StackPane {
-	private SimpleObjectProperty<ObservableRpgItem> rootItem;
+	private SimpleObjectProperty<RpgItem> rootItem;
 
-	public ObservableRpgItem getRootItem() {
+	public RpgItem getRootItem() {
 		return rootItem.get();
 	};
 
-	public void setRootItem(ObservableRpgItem newItem) {
+	public void setRootItem(RpgItem newItem) {
 		this.rootItem.set(newItem);
 	}
 
-	public ObjectProperty<ObservableRpgItem> rootItemProperty() {
+	public ObjectProperty<RpgItem> rootItemProperty() {
 		return rootItem;
 	}
 
 	private TitledPane rootPane = new TitledPane();
 
-	public TextTreeView(ObservableRpgItem item) {
-		rootItem = new SimpleObjectProperty<ObservableRpgItem>(item);
+	public TextTreeView(RpgItem item) {
+		rootItem = new SimpleObjectProperty<RpgItem>(item);
 		getChildren().add(rootPane);
 		UpdateTextTreeView(item);
 		rootItem.addListener(new InvalidationListener() {
 			@Override
 			public void invalidated(Observable arg0) {
 				UpdateTextTreeView(rootItem.get());
-				rootItem.get().addListener( new InvalidationListener() {
-					@Override
-					public void invalidated(Observable arg0) {
-						UpdateTextTreeView(rootItem.get());
-					}
-				});
 			}
 		});
 	}
 
-	protected void UpdateTextTreeView(ObservableRpgItem item) {
-		rootPane.textProperty().bind(Bindings.concat(rootItem.get().stackSizeProperty(), "X \"",
-				rootItem.get().nameProperty(), "\", ", rootItem.get().weightProperty().get().getValue()));
+	protected void UpdateTextTreeView(RpgItem item) {
+		rootPane.setText(Integer.toString(rootItem.get().stackSize) + "X \"" +
+				rootItem.get().name + "\", " + rootItem.get().weight.getValue());
 		VBox contents = new VBox();
 		contents.setPadding(new Insets(0, 0, 0, 5));
 		{
@@ -69,7 +60,7 @@ public class TextTreeView extends StackPane {
 			});
 			contents.getChildren().add(testButton);
 		}
-		for (ObservableRpgItem child : rootItem.get().getContents()) {
+		for (RpgItem child : rootItem.get().contents) {
 			contents.getChildren().add(new TextTreeView(child));
 		}
 
@@ -77,8 +68,8 @@ public class TextTreeView extends StackPane {
 	}
 
 	String getRpgItemLabel() {
-		return String.format("%dX \"%s\", %f %s (Total %f %s)", rootItem.get().getStackSize(), rootItem.get().getName(),
-				rootItem.get().getWeight().getValue(), rootItem.get().getWeight().getUnitsAbbreviation(),
+		return String.format("%dX \"%s\", %f %s (Total %f %s)", rootItem.get().stackSize, rootItem.get().name,
+				rootItem.get().weight.getValue(), rootItem.get().weight.getUnitsAbbreviation(),
 				rootItem.get().getTotalWeight().getValue(), rootItem.get().getTotalWeight().getUnitsAbbreviation());
 	}
 }
