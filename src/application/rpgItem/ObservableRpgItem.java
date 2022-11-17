@@ -188,15 +188,15 @@ public class ObservableRpgItem {
 	private final ListProperty<Coordinate> internalPoints;
 
 	public ObservableList<Coordinate> getInternalPoints() {
-		return externalPoints.get();
+		return internalPoints.get();
 	}
 
 	public void setInternalPoints(ObservableList<Coordinate> newList) {
-		externalPoints.set(newList);
+		internalPoints.set(newList);
 	}
 
 	public ListProperty<Coordinate> internalPointsProperty() {
-		return externalPoints;
+		return internalPoints;
 	}
 
 	public ObservableRpgItem(String name, String description, String link, int stackSize, IItemWeight weight,
