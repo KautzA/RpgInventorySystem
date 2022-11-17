@@ -7,7 +7,8 @@ import java.io.FileOutputStream;
 import application.coordinate.CardinalRotation;
 import application.coordinate.Coordinate;
 import application.itemWeight.ItemWeightKg;
-import application.rpgItem.RpgItem;
+import application.rpgItem.ObservableRpgItem;
+import application.rpgItemXmlParser.ObservableRpgItemXmlParser;
 import application.rpgItemXmlParser.RpgItemXmlParser;
 import application.textTreeView.TextTreeView;
 import javafx.application.Application;
@@ -29,13 +30,13 @@ import javafx.scene.layout.VBox;
 
 
 public class Main extends Application {
-	final ObjectProperty<RpgItem> rootRpgItem;
-	final ObjectProperty<RpgItem> activeRpgItem;
+	final ObjectProperty<ObservableRpgItem> rootRpgItem;
+	final ObjectProperty<ObservableRpgItem> activeRpgItem;
 	
 	public Main() {
-		RpgItem rootItem = new RpgItem("Default Item", new ItemWeightKg(1), new Coordinate(0,0), CardinalRotation.ZERO);
-		this.rootRpgItem = new SimpleObjectProperty<RpgItem>(this, "rootRpgItem", rootItem);
-		this.activeRpgItem = new SimpleObjectProperty<RpgItem>(this, "activeRpgItem", rootItem);
+		ObservableRpgItem rootItem = new ObservableRpgItem("Default Item", new ItemWeightKg(1), new Coordinate(0,0), CardinalRotation.ZERO);
+		this.rootRpgItem = new SimpleObjectProperty<ObservableRpgItem>(this, "rootRpgItem", rootItem);
+		this.activeRpgItem = new SimpleObjectProperty<ObservableRpgItem>(this, "activeRpgItem", rootItem);
 	}
 	@Override
 	public void start(Stage primaryStage) {
@@ -78,9 +79,9 @@ public class Main extends Application {
 						fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML", "*.xml"));
 						File file = fileChooser.showOpenDialog(primaryStage);
 						try {
-							rootRpgItem.set(RpgItemXmlParser.parseXML(new FileInputStream(file)));
-							System.out.println("Loaded RpgItem with name = " + rootRpgItem.get().name);
-							root.getChildren().add(TextTreeView.MakeTextTreeView(rootRpgItem.getValue()));
+							rootRpgItem.set(ObservableRpgItemXmlParser.parseXML(new FileInputStream(file)));
+							System.out.println("Loaded RpgItem with name = " + rootRpgItem.get().getName());
+							root.getChildren().add(new TextTreeView(rootRpgItem.getValue()));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -99,7 +100,7 @@ public class Main extends Application {
 						fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML", "*.xml"));
 						File file = fileChooser.showSaveDialog(primaryStage);
 						try {
-							RpgItemXmlParser.saveXML(rootRpgItem.get(), new FileOutputStream(file));
+							ObservableRpgItemXmlParser.saveXML(rootRpgItem.get(), new FileOutputStream(file));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -123,12 +124,14 @@ public class Main extends Application {
 	
 	Stage makeTextView() {
 		Stage textView = new Stage();
-		textView.titleProperty().bind(Bindings.concat("Text view of \"",rootRpgItem.get().name, "\""));
+		textView.titleProperty().bind(Bindings.concat("Text view of \"",rootRpgItem.get().nameProperty(), "\""));
 		
 		
 		ScrollPane root = new ScrollPane();
 		root.setFitToWidth(true);
-		root.setContent(TextTreeView.MakeTextTreeView(rootRpgItem.get()));
+		TextTreeView contents = new TextTreeView(rootRpgItem.get());
+		contents.rootItemProperty().bindBidirectional(rootRpgItem);
+		root.setContent(new TextTreeView(rootRpgItem.get()));
 		
 		Scene scene = new Scene(root);
 		textView.setScene(scene);
