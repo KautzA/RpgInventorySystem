@@ -9,7 +9,7 @@ import application.coordinate.Coordinate;
 import application.itemWeight.ItemWeightKg;
 import application.rpgItem.ObservableRpgItem;
 import application.rpgItemXmlParser.ObservableRpgItemXmlParser;
-import application.textTreeView.TextTreeView;
+import application.views.textTreeView.TextTreeView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;

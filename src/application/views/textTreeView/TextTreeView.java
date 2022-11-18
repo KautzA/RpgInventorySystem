@@ -1,4 +1,4 @@
-package application.textTreeView;
+package application.views.textTreeView;
 
 import application.rpgItem.ObservableRpgItem;
 import javafx.event.ActionEvent;
