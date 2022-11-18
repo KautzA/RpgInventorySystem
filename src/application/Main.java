@@ -9,10 +9,11 @@ import application.coordinate.Coordinate;
 import application.itemWeight.ItemWeightKg;
 import application.rpgItem.ObservableRpgItem;
 import application.rpgItemXmlParser.ObservableRpgItemXmlParser;
-import application.rpgItemXmlParser.RpgItemXmlParser;
 import application.textTreeView.TextTreeView;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -24,7 +25,6 @@ import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -81,7 +81,6 @@ public class Main extends Application {
 						try {
 							rootRpgItem.set(ObservableRpgItemXmlParser.parseXML(new FileInputStream(file)));
 							System.out.println("Loaded RpgItem with name = " + rootRpgItem.get().getName());
-							root.getChildren().add(new TextTreeView(rootRpgItem.getValue()));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -125,13 +124,19 @@ public class Main extends Application {
 	Stage makeTextView() {
 		Stage textView = new Stage();
 		textView.titleProperty().bind(Bindings.concat("Text view of \"",rootRpgItem.get().nameProperty(), "\""));
+		rootRpgItem.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable arg0) {
+				textView.titleProperty().bind(Bindings.concat("Text view of \"",rootRpgItem.get().nameProperty(), "\""));
+			}
+		});
 		
 		
 		ScrollPane root = new ScrollPane();
 		root.setFitToWidth(true);
 		TextTreeView contents = new TextTreeView(rootRpgItem.get());
 		contents.rootItemProperty().bindBidirectional(rootRpgItem);
-		root.setContent(new TextTreeView(rootRpgItem.get()));
+		root.setContent(contents);
 		
 		Scene scene = new Scene(root);
 		textView.setScene(scene);
