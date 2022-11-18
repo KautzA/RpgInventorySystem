@@ -9,6 +9,8 @@ import java.util.UUID;
 import application.coordinate.Coordinate;
 import application.coordinate.Rotation;
 import application.itemWeight.IItemWeight;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
@@ -22,7 +24,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ObservableRpgItem {
+public class ObservableRpgItem implements Observable{
 	/** unique identifier for this RpgItem */
 	public final UUID uuid;
 
@@ -330,5 +332,35 @@ public class ObservableRpgItem {
 //			return true;
 //		}
 		return false;
+	}
+	
+	@Override
+	public void addListener(InvalidationListener arg0) {
+		this.name.addListener(arg0);
+		this.description.addListener(arg0);
+		this.link.addListener(arg0);
+		this.stackSize.addListener(arg0);
+		this.weight.addListener(arg0);
+		this.contentsWeightScale.addListener(arg0);
+		this.contents.addListener(arg0);
+		this.externalOffset.addListener(arg0);
+		this.externalRotation.addListener(arg0);
+		this.externalPoints.addListener(arg0);
+		this.internalPoints.addListener(arg0);
+	}
+
+	@Override
+	public void removeListener(InvalidationListener arg0) {
+		this.name.removeListener(arg0);
+		this.description.removeListener(arg0);
+		this.link.removeListener(arg0);
+		this.stackSize.removeListener(arg0);
+		this.weight.removeListener(arg0);
+		this.contentsWeightScale.removeListener(arg0);
+		this.contents.removeListener(arg0);
+		this.externalOffset.removeListener(arg0);
+		this.externalRotation.removeListener(arg0);
+		this.externalPoints.removeListener(arg0);
+		this.internalPoints.removeListener(arg0);
 	}
 }
