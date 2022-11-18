@@ -28,7 +28,7 @@ public class TestRpgItemXmlParser {
 		IItemWeight weightA = new ItemWeightKg(0);
 		this.emptyItem = new RpgItem("TestEmptyBag", weightA, new Coordinate(0, 0), CardinalRotation.ZERO);
 		this.containingItem = new RpgItem("TestNonEmptyBag", "", "", 1, weightA, 1, Arrays.asList(emptyItem),
-				new Coordinate(0, 0), CardinalRotation.ZERO, Arrays.asList(new Coordinate(0, 0)),
+				new Coordinate(0, 0), CardinalRotation.ZERO, Arrays.asList(new Coordinate(0, 0), new Coordinate(0, 1)),
 				Arrays.asList(new Coordinate(0, 0)));
 	}
 

@@ -28,8 +28,8 @@ public class TestObservableRpgItemXmlParser {
 		IItemWeight weightA = new ItemWeightKg(0);
 		this.emptyItem = new ObservableRpgItem("TestEmptyBag", weightA, new Coordinate(0, 0), CardinalRotation.ZERO);
 		this.containingItem = new ObservableRpgItem("TestNonEmptyBag", "", "", 1, weightA, 1, Arrays.asList(emptyItem),
-				new Coordinate(0, 0), CardinalRotation.ZERO, Arrays.asList(new Coordinate(0, 0)),
-				Arrays.asList(new Coordinate(0, 0)));
+				new Coordinate(0, 0), CardinalRotation.ZERO, Arrays.asList(new Coordinate(0, 0), new Coordinate(0, 1)),
+				Arrays.asList(new Coordinate(1, 0)));
 	}
 
 	@Test
