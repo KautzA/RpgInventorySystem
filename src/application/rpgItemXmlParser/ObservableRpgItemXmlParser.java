@@ -183,7 +183,6 @@ public class ObservableRpgItemXmlParser {
 				y_coord = Integer.valueOf(child.getChildNodes().item(0).getNodeValue());
 				break;
 			}
-			index++;
 		}
 		return new Coordinate(x_coord, y_coord);
 	}
