@@ -54,8 +54,7 @@ public class TextTreeView extends StackPane {
 	}
 
 	protected void UpdateTextTreeView() {
-		rootPane.textProperty().bind(Bindings.concat(rootItem.get().stackSizeProperty(), "X \"",
-				rootItem.get().nameProperty(), "\", ", rootItem.get().weightProperty().get().getValue()));
+		rootPane.setText(getRpgItemLabel());
 		VBox contents = new VBox();
 		contents.setPadding(new Insets(0, 0, 0, 5));
 		{
