@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 
 import application.coordinate.CardinalRotation;
 import application.coordinate.Coordinate;
+import application.gridViews.ExternalGrid;
 import application.itemWeight.ItemWeightKg;
 import application.rpgItem.ObservableRpgItem;
 import application.rpgItemXmlParser.ObservableRpgItemXmlParser;
@@ -25,8 +26,11 @@ import javafx.stage.WindowEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 
 public class Main extends Application {
@@ -108,7 +112,25 @@ public class Main extends Application {
 				banner.getChildren().add(saveItemButton);
 			}
 			
-			Scene scene = new Scene(root,400,400);
+			{
+				
+				ExternalGrid gridText = new ExternalGrid(root,rootRpgItem.get(), 300,300);
+				
+//				Text t1 = new Text();
+//				
+//				rootRpgItem.addListener(new InvalidationListener() {
+//					@Override
+//					public void invalidated(Observable arg0) {
+//						t1.setText(rootRpgItem.get().getName());
+//					}
+//				});
+//				
+//				t1.setText(rootRpgItem.get().getName());
+				banner.getChildren().add(gridText);
+				
+			}
+			
+			Scene scene = new Scene(root,700,700);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
