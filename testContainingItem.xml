@@ -1,1 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><rpgitemgrid><itemname>TestNonEmptyBag</itemname><itemdescription/><link/><stacksize>1</stacksize><weightunit>kilograms</weightunit><weightvalue>0.0</weightvalue><contentsweightscale>1.0</contentsweightscale><rpgitemgrid><itemname>TestEmptyBag</itemname><itemdescription/><link/><stacksize>1</stacksize><weightunit>kilograms</weightunit><weightvalue>0.0</weightvalue><contentsweightscale>1.0</contentsweightscale><externaloffset><x>0</x><y>0</y></externaloffset><externalrotation>0</externalrotation><externalpoints><coordinate><x>0</x><y>0</y></coordinate></externalpoints><internalpoints/></rpgitemgrid><externaloffset><x>0</x><y>0</y></externaloffset><externalrotation>0</externalrotation><externalpoints><coordinate><x>0</x><y>0</y></coordinate></externalpoints><internalpoints><coordinate><x>0</x><y>0</y></coordinate></internalpoints></rpgitemgrid>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><rpgitemgrid><itemname>TestNonEmptyBag</itemname><itemdescription/><link/><stacksize>1</stacksize><weightunit>kilograms</weightunit><weightvalue>0.0</weightvalue><contentsweightscale>1.0</contentsweightscale><rpgitemgrid><itemname>TestEmptyBag</itemname><itemdescription/><link/><stacksize>1</stacksize><weightunit>kilograms</weightunit><weightvalue>0.0</weightvalue><contentsweightscale>1.0</contentsweightscale><externaloffset><x>0</x><y>0</y></externaloffset><externalrotation>0</externalrotation><externalpoints><coordinate><x>0</x><y>0</y></coordinate></externalpoints><internalpoints/></rpgitemgrid><externaloffset><x>0</x><y>0</y></externaloffset><externalrotation>0</externalrotation><externalpoints><coordinate><x>0</x><y>0</y></coordinate>
+	<coordinate>
+		<x>1</x>
+		<y>0</y></coordinate>
+	<coordinate>
+		<x>1</x>
+		<y>1</y></coordinate>
+	<coordinate>
+		<x>1</x>
+		<y>2</y></coordinate></externalpoints><internalpoints><coordinate><x>0</x><y>0</y></coordinate></internalpoints></rpgitemgrid>
