@@ -10,7 +10,6 @@ import application.itemWeight.ItemWeightKg;
 import application.rpgItem.ObservableRpgItem;
 import application.rpgItemXmlParser.ObservableRpgItemXmlParser;
 import application.views.displayItem.DisplayItem;
-import application.views.externalView.ExternalView;
 import application.views.textTreeView.TextTreeView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -67,6 +66,7 @@ public class Main extends Application {
 					@Override
 					public void handle(ActionEvent arg0) {
 						textWindow.show();
+						textWindow.toFront();
 					}
 				});
 				banner.getChildren().add(textViewButton);
