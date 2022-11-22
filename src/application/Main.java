@@ -114,19 +114,19 @@ public class Main extends Application {
 			
 			{
 				
-				ExternalGrid gridText = new ExternalGrid(root,rootRpgItem.get(), 300,300);
+//				ExternalGrid gridText = new ExternalGrid(root,rootRpgItem.get(), 300,300);
 				
-//				Text t1 = new Text();
-//				
-//				rootRpgItem.addListener(new InvalidationListener() {
-//					@Override
-//					public void invalidated(Observable arg0) {
-//						t1.setText(rootRpgItem.get().getName());
-//					}
-//				});
-//				
-//				t1.setText(rootRpgItem.get().getName());
-				banner.getChildren().add(gridText);
+				Text t1 = new Text();
+				
+				rootRpgItem.addListener(new InvalidationListener() {
+					@Override
+					public void invalidated(Observable arg0) {
+						t1.setText(rootRpgItem.get().getName());
+					}
+				});
+				
+				t1.setText(rootRpgItem.get().getName());
+				banner.getChildren().add(t1);
 				
 			}
 			
