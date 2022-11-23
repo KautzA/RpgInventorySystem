@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -105,6 +106,7 @@ public class DisplayItem extends StackPane {
 		{
 			Button saveButton = new Button();
 			saveButton.setText("Save");
+			buttonFooter.setMargin(saveButton, new Insets(5, 5, 5, 5));
 			saveButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
@@ -116,6 +118,7 @@ public class DisplayItem extends StackPane {
 		{
 			Button resetButton = new Button();
 			resetButton.setText("Reset");
+			buttonFooter.setMargin(resetButton, new Insets(5, 5, 5, 5));
 			resetButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
@@ -131,11 +134,11 @@ public class DisplayItem extends StackPane {
 		FlowPane itemControls = new FlowPane();
 
 		itemControls.getChildren().add(LabelNode("Stack", controlStackSize));
-		itemControls.getChildren().add(LabelNode("name", controlName));
-		itemControls.getChildren().add(LabelNode("link", controlLink));
-		itemControls.getChildren().add(LabelNode("weight", controlWeightValue));
-		itemControls.getChildren().add(LabelNode("units", controlWeightUnit));
-		itemControls.getChildren().add(LabelNode("description", controlDescription));
+		itemControls.getChildren().add(LabelNode("Name", controlName));
+		itemControls.getChildren().add(LabelNode("Link", controlLink));
+		itemControls.getChildren().add(LabelNode("Weight", controlWeightValue));
+		itemControls.getChildren().add(LabelNode("Units", controlWeightUnit));
+		itemControls.getChildren().add(LabelNode("Description", controlDescription));
 		itemControls.getChildren().add(LabelNode("External", controlExternalPoints));
 		itemControls.getChildren().add(LabelNode("Internal", controlInternalPoints));
 
@@ -144,6 +147,7 @@ public class DisplayItem extends StackPane {
 
 	protected Node LabelNode(String name, Node element) {
 		VBox result = new VBox();
+		VBox.setMargin(element, new Insets(5, 5, 5, 5));
 		result.getChildren().add(new Label(name));
 		result.getChildren().add(element);
 		return result;
