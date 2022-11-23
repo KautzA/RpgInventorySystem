@@ -55,6 +55,8 @@ public class Main extends Application {
 			});
 
 			Stage textWindow = makeTextView();
+			Stage editWindow = makeEditView();
+
 			VBox root = new VBox();
 			HBox banner = new HBox();
 			root.getChildren().add(banner);
@@ -112,6 +114,20 @@ public class Main extends Application {
 				banner.getChildren().add(saveItemButton);
 			}
 
+			{
+				Button editItemButton = new Button();
+				editItemButton.setText("Edit current item");
+				editItemButton.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent arg0) {
+						editWindow.show();
+						editWindow.toFront();
+					}
+				});
+				banner.getChildren().add(editItemButton);
+			}
+
+			// TODO: Replace this block with the view-only display
 			DisplayItem activeDisplay = new DisplayItem(activeRpgItem.get());
 			activeDisplay.activeItemProperty().bindBidirectional(activeRpgItem);
 			root.getChildren().add(activeDisplay);
@@ -150,5 +166,27 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 		textView.setScene(scene);
 		return textView;
+	}
+
+	Stage makeEditView() {
+		Stage editView = new Stage();
+		editView.titleProperty().bind(Bindings.concat("Edit view of \"", activeRpgItem.get().nameProperty(), "\""));
+		rootRpgItem.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable arg0) {
+				editView.titleProperty()
+						.bind(Bindings.concat("Edit view of \"", rootRpgItem.get().nameProperty(), "\""));
+			}
+		});
+
+		ScrollPane root = new ScrollPane();
+		root.setFitToWidth(true);
+		DisplayItem contents = new DisplayItem(rootRpgItem.get());
+		contents.activeItemProperty().bindBidirectional(rootRpgItem);
+		root.setContent(contents);
+
+		Scene scene = new Scene(root);
+		editView.setScene(scene);
+		return editView;
 	}
 }
