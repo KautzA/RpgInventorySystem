@@ -28,10 +28,24 @@ public class TextTreeView extends StackPane {
 		return rootItem;
 	}
 
+	private SimpleObjectProperty<ObservableRpgItem> activeItem;
+	
+	public ObservableRpgItem getActiveItem() {
+		return activeItem.get();
+	};
+
+	public void setActiveItem(ObservableRpgItem newItem) {
+		this.activeItem.set(newItem);
+	}
+
+	public ObjectProperty<ObservableRpgItem> activeItemProperty() {
+		return activeItem;
+	}
 	private TitledPane rootPane = new TitledPane();
 
 	public TextTreeView(ObservableRpgItem item) {
 		rootItem = new SimpleObjectProperty<ObservableRpgItem>(item);
+		activeItem = new SimpleObjectProperty<ObservableRpgItem>(item);
 		getChildren().add(rootPane);
 		UpdateTextTreeView();
 		rootItem.addListener(new InvalidationListener() {
@@ -53,11 +67,12 @@ public class TextTreeView extends StackPane {
 		VBox contents = new VBox();
 		contents.setPadding(new Insets(0, 0, 0, 5));
 		{
-			Button testButton = new Button("testButton");
+			Button testButton = new Button("Set Active");
 			testButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
 					System.out.println(getRpgItemLabel());
+					activeItem.set(rootItem.get());
 
 				}
 			});
@@ -65,6 +80,7 @@ public class TextTreeView extends StackPane {
 		}
 		for (ObservableRpgItem child : rootItem.get().getContents()) {
 			TextTreeView subview = new TextTreeView(child);
+			subview.activeItem.bindBidirectional(this.activeItem);
 			contents.getChildren().add(subview);
 
 		}
