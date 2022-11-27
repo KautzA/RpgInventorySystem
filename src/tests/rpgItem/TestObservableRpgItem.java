@@ -1,5 +1,6 @@
 package tests.rpgItem;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Assert;
@@ -11,6 +12,7 @@ import application.coordinate.Coordinate;
 import application.itemWeight.IItemWeight;
 import application.itemWeight.ItemWeightKg;
 import application.rpgItem.ObservableRpgItem;
+import javafx.collections.FXCollections;
 
 public class TestObservableRpgItem {
 	ObservableRpgItem emptyItem;
@@ -69,11 +71,33 @@ public class TestObservableRpgItem {
 	public void testNotEqualContiainingContents() {
 		Assert.assertNotEquals(containingItem, containingItemDifferentContents);
 	}
-	
+
 	@Test
 	public void testGetContentsContainingItem() {
 		Assert.assertEquals(containingItem.getContents().size(), 1);
 		Assert.assertEquals(containingItem.getContents().get(0), emptyItem);
+	}
+
+	@Test
+	public void testGetOccupiedPointsBasic() {
+		ObservableRpgItem unmovedItem = new ObservableRpgItem("TestUnmovedItem", "", "", 1, new ItemWeightKg(1), 1,
+				FXCollections.observableList(Arrays.asList()), new Coordinate(0, 0), CardinalRotation.ZERO,
+				FXCollections.observableList(new ArrayList<Coordinate>(
+						Arrays.asList(new Coordinate(0, 0), new Coordinate(1, 0), new Coordinate(2, 1)))),
+				FXCollections.observableList(new ArrayList<Coordinate>()));
+		Assert.assertTrue(unmovedItem.getOccupiedPoints()
+				.equals(Arrays.asList(new Coordinate(0, 0), new Coordinate(1, 0), new Coordinate(2, 1))));
+	}
+
+	@Test
+	public void testGetOccupiedPointsComplex() {
+		ObservableRpgItem movedRotatedItem = new ObservableRpgItem("TestComplexItem", "", "", 1, new ItemWeightKg(1), 1,
+				FXCollections.observableList(Arrays.asList()), new Coordinate(4, 5), CardinalRotation.HALF_PI,
+				FXCollections.observableList(new ArrayList<Coordinate>(
+						Arrays.asList(new Coordinate(0, 0), new Coordinate(1, 0), new Coordinate(2, 1)))),
+				FXCollections.observableList(new ArrayList<Coordinate>()));
+		Assert.assertTrue(movedRotatedItem.getOccupiedPoints()
+				.equals(Arrays.asList(new Coordinate(4, 5), new Coordinate(4, 6), new Coordinate(3, 7))));
 	}
 
 }
