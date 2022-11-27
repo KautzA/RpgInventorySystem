@@ -89,7 +89,7 @@ public class ExternalView extends StackPane {
 //			Button cell = new Button();
 //			cell.setText("X");
 			Rectangle cell = new Rectangle();
-			cell.setFill(Color.RED);
+			cell.setFill(Color.GREEN);
 			cell.setStroke(Color.BLACK);
 			cell.setWidth(10);
 			cell.setHeight(10);
