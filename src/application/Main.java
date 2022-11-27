@@ -20,6 +20,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -53,6 +54,10 @@ public class Main extends Application {
 					System.exit(0);
 				}
 			});
+			
+			primaryStage.setMinHeight(400);
+			primaryStage.setMinWidth(1000);
+			primaryStage.setResizable(false);
 
 			Stage textWindow = makeTextView();
 			Stage editWindow = makeEditView();
@@ -64,6 +69,7 @@ public class Main extends Application {
 			{
 				Button textViewButton = new Button();
 				textViewButton.setText("Open text view");
+				banner.setMargin(textViewButton, new Insets(5, 5, 5, 5));
 				textViewButton.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent arg0) {
@@ -77,6 +83,7 @@ public class Main extends Application {
 			{
 				Button loadItemButton = new Button();
 				loadItemButton.setText("Load new item");
+				banner.setMargin(loadItemButton, new Insets(5, 5, 5, 5));
 				loadItemButton.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent arg0) {
@@ -98,6 +105,7 @@ public class Main extends Application {
 			{
 				Button saveItemButton = new Button();
 				saveItemButton.setText("Save current item");
+				banner.setMargin(saveItemButton, new Insets(5, 5, 5, 5));
 				saveItemButton.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent arg0) {
@@ -117,6 +125,7 @@ public class Main extends Application {
 			{
 				Button editItemButton = new Button();
 				editItemButton.setText("Edit current item");
+				banner.setMargin(editItemButton, new Insets(5, 5, 5, 5));
 				editItemButton.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent arg0) {
@@ -130,6 +139,7 @@ public class Main extends Application {
 			// TODO: Replace this block with the view-only display
 			DisplayItem activeDisplay = new DisplayItem(activeRpgItem.get());
 			activeDisplay.activeItemProperty().bindBidirectional(activeRpgItem);
+			root.setMargin(activeDisplay, new Insets(5, 5, 5, 5));
 			root.getChildren().add(activeDisplay);
 
 			Scene scene = new Scene(root, 400, 400);
