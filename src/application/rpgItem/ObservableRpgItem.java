@@ -249,6 +249,14 @@ public class ObservableRpgItem implements Observable{
 	public IItemWeight getGetSingleWeight() {
 		return this.getWeight().add(this.getContentsScaledWeight());
 	}
+	
+	public List<Coordinate> getOccupiedPoints() {
+		ArrayList<Coordinate> result = new ArrayList<Coordinate>();
+		for (Coordinate point : this.externalPoints) {
+			result.add(this.getExternalOffset().add(this.getExternalRotation().rotateCoordinate(point)));
+		}
+		return result;
+	}
 
 	public boolean equals(Object other) {
 		if (other instanceof ObservableRpgItem) {

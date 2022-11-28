@@ -10,6 +10,7 @@ import application.itemWeight.ItemWeightKg;
 import application.rpgItem.ObservableRpgItem;
 import application.rpgItemXmlParser.ObservableRpgItemXmlParser;
 import application.views.displayItem.DisplayItem;
+import application.views.readOnlyView.ReadOnlyView;
 import application.views.textTreeView.TextTreeView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -137,7 +138,7 @@ public class Main extends Application {
 			}
 
 			// TODO: Replace this block with the view-only display
-			DisplayItem activeDisplay = new DisplayItem(activeRpgItem.get());
+			ReadOnlyView activeDisplay = new ReadOnlyView(activeRpgItem.get());
 			activeDisplay.activeItemProperty().bindBidirectional(activeRpgItem);
 			root.setMargin(activeDisplay, new Insets(5, 5, 5, 5));
 			root.getChildren().add(activeDisplay);

@@ -1,24 +1,19 @@
-package application.views.displayItem;
+package application.views.readOnlyView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import application.coordinate.CardinalRotation;
-import application.coordinate.Coordinate;
-import application.itemWeight.ItemWeightFactory;
 import application.rpgItem.ObservableRpgItem;
 import application.views.coordinatePicker.CoordinatePicker;
+import application.views.externalView.ExternalView;
+import application.views.internalView.InternalView;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -29,7 +24,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class DisplayItem extends StackPane {
+public class ReadOnlyView extends StackPane {
 	private final SimpleObjectProperty<ObservableRpgItem> activeItem;
 
 	public ObservableRpgItem getActiveItem() {
@@ -55,107 +50,75 @@ public class DisplayItem extends StackPane {
 	private Spinner<Double> controlWeightValue = new Spinner<Double>(0, 20, 1, 0.1);
 	private ComboBox<String> controlWeightUnit = new ComboBox<String>(weightUnits);
 	private Spinner<Double> controlWeightScale = new Spinner<Double>(0, 2, 1, 0.25);
-	private CoordinatePicker controlExternalPoints = new CoordinatePicker();
-	private CoordinatePicker controlInternalPoints = new CoordinatePicker();
+	private ExternalView displayExternalView;
+	private InternalView displayInternalView;
 
-	public DisplayItem(ObservableRpgItem item) {
+	public ReadOnlyView(ObservableRpgItem item) {
 		activeItem = new SimpleObjectProperty<ObservableRpgItem>(item);
+		displayExternalView = new ExternalView(item);
+		displayExternalView.activeItemProperty().bind(activeItem);
+		displayInternalView = new InternalView(item);
+		displayInternalView.activeItemProperty().bind(activeItem);
 		getChildren().add(rootPane);
 		rootPane.setPrefSize(200, 200);
-
-		Node buttonFooter = makeButtonFooter();
-		rootPane.setBottom(buttonFooter);
 
 		Node itemDisplay = makeItemDisplay();
 		rootPane.setCenter(itemDisplay);
 
-		UpdateDisplayItem();
+		updateDisplayItem();
 
 		activeItem.addListener(new InvalidationListener() {
 			@Override
 			public void invalidated(Observable arg0) {
-				UpdateDisplayItem();
+				updateDisplayItem();
 				activeItem.get().addListener(new InvalidationListener() {
 					@Override
 					public void invalidated(Observable arg0) {
-						UpdateDisplayItem();
+						updateDisplayItem();
 					}
 				});
 			}
 		});
 	}
 
-	protected void UpdateDisplayItem() {
+	protected void updateDisplayItem() {
 		System.out.println("ExternalView activeItemUpdate");
 		controlName.setText(activeItem.get().getName());
+		controlName.setEditable(false);
 		controlLink.setText(activeItem.get().getLink());
+		controlLink.setEditable(false);
 		controlDescription.setText(activeItem.get().getDescription());
+		controlDescription.setEditable(false);
 		controlStackSize.getValueFactory().setValue(activeItem.get().getStackSize());
+		controlStackSize.setDisable(true);;
 		controlWeightValue.getValueFactory().setValue((double) activeItem.get().getWeight().getValue());
+		controlWeightValue.setDisable(true);
 		controlWeightUnit.setValue(activeItem.get().getWeight().getUnitsAbbreviation());
+		controlWeightUnit.setDisable(true);
 		controlWeightScale.getValueFactory().setValue((double) activeItem.get().getContentsWeightScale());
-		controlExternalPoints.setItemCoordinates(activeItem.get().getExternalPoints());
-		controlInternalPoints.setItemCoordinates(activeItem.get().getInternalPoints());
-	}
-
-	protected Node makeButtonFooter() {
-		FlowPane buttonFooter = new FlowPane();
-		{
-			Button saveButton = new Button();
-			saveButton.setText("Save");
-			buttonFooter.setMargin(saveButton, new Insets(5, 5, 5, 5));
-			saveButton.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent arg0) {
-					activeItem.set(getItemFromElements());
-				}
-			});
-			buttonFooter.getChildren().add(saveButton);
-		}
-		{
-			Button resetButton = new Button();
-			resetButton.setText("Reset");
-			buttonFooter.setMargin(resetButton, new Insets(5, 5, 5, 5));
-			resetButton.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent arg0) {
-					UpdateDisplayItem();
-				}
-			});
-			buttonFooter.getChildren().add(resetButton);
-		}
-		return buttonFooter;
+		controlWeightScale.setDisable(true);
 	}
 
 	protected Node makeItemDisplay() {
 		FlowPane itemControls = new FlowPane();
 
-		itemControls.getChildren().add(LabelNode("Stack", controlStackSize));
-		itemControls.getChildren().add(LabelNode("Name", controlName));
-		itemControls.getChildren().add(LabelNode("Link", controlLink));
-		itemControls.getChildren().add(LabelNode("Weight", controlWeightValue));
-		itemControls.getChildren().add(LabelNode("Units", controlWeightUnit));
-		itemControls.getChildren().add(LabelNode("Description", controlDescription));
-		itemControls.getChildren().add(LabelNode("External", controlExternalPoints));
-		itemControls.getChildren().add(LabelNode("Internal", controlInternalPoints));
+		itemControls.getChildren().add(labelNode("Stack", controlStackSize));
+		itemControls.getChildren().add(labelNode("Name", controlName));
+		itemControls.getChildren().add(labelNode("Link", controlLink));
+		itemControls.getChildren().add(labelNode("Weight", controlWeightValue));
+		itemControls.getChildren().add(labelNode("Units", controlWeightUnit));
+		itemControls.getChildren().add(labelNode("Description", controlDescription));
+		itemControls.getChildren().add(labelNode("External", displayExternalView));
+		itemControls.getChildren().add(labelNode("Internal", displayInternalView));
 
 		return itemControls;
 	}
 
-	protected Node LabelNode(String name, Node element) {
+	protected Node labelNode(String name, Node element) {
 		VBox result = new VBox();
 		VBox.setMargin(element, new Insets(5, 5, 5, 5));
 		result.getChildren().add(new Label(name));
 		result.getChildren().add(element);
 		return result;
-	}
-
-	protected ObservableRpgItem getItemFromElements() {
-		return new ObservableRpgItem(controlName.getText(), controlDescription.getText(), controlLink.getText(),
-				controlStackSize.getValue(),
-				ItemWeightFactory.GetWeight(controlWeightUnit.getValue(), controlWeightValue.getValue().floatValue()),
-				controlWeightScale.getValue().floatValue(), new ArrayList<ObservableRpgItem>(), new Coordinate(0, 0),
-				CardinalRotation.ZERO, controlExternalPoints.getItemCoordinates(),
-				controlInternalPoints.getItemCoordinates());
 	}
 }
