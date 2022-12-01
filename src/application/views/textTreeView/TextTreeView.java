@@ -47,22 +47,22 @@ public class TextTreeView extends StackPane {
 		rootItem = new SimpleObjectProperty<ObservableRpgItem>(item);
 		activeItem = new SimpleObjectProperty<ObservableRpgItem>(item);
 		getChildren().add(rootPane);
-		UpdateTextTreeView();
+		updateTextTreeView();
 		rootItem.addListener(new InvalidationListener() {
 			@Override
 			public void invalidated(Observable arg0) {
-				UpdateTextTreeView();
+				updateTextTreeView();
 				rootItem.get().addListener(new InvalidationListener() {
 					@Override
 					public void invalidated(Observable arg0) {
-						UpdateTextTreeView();
+						updateTextTreeView();
 					}
 				});
 			}
 		});
 	}
 
-	protected void UpdateTextTreeView() {
+	public void updateTextTreeView() {
 		rootPane.setText(getRpgItemLabel());
 		VBox contents = new VBox();
 		contents.setPadding(new Insets(0, 0, 0, 5));

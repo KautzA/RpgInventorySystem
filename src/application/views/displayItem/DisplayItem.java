@@ -52,7 +52,7 @@ public class DisplayItem extends StackPane {
 	private TextField controlLink = new TextField();
 	private TextArea controlDescription = new TextArea();
 	private Spinner<Integer> controlStackSize = new Spinner<Integer>(0, 20, 0, 1);
-	private Spinner<Double> controlWeightValue = new Spinner<Double>(0, 20, 1, 0.1);
+	private Spinner<Double> controlWeightValue = new Spinner<Double>(0, 1000, 1, 0.1);
 	private ComboBox<String> controlWeightUnit = new ComboBox<String>(weightUnits);
 	private Spinner<Double> controlWeightScale = new Spinner<Double>(0, 2, 1, 0.25);
 	private CoordinatePicker controlExternalPoints = new CoordinatePicker();
@@ -69,29 +69,30 @@ public class DisplayItem extends StackPane {
 		Node itemDisplay = makeItemDisplay();
 		rootPane.setCenter(itemDisplay);
 
-		UpdateDisplayItem();
+		updateDisplayItem();
 
 		activeItem.addListener(new InvalidationListener() {
 			@Override
 			public void invalidated(Observable arg0) {
-				UpdateDisplayItem();
+				updateDisplayItem();
 				activeItem.get().addListener(new InvalidationListener() {
 					@Override
 					public void invalidated(Observable arg0) {
-						UpdateDisplayItem();
+						updateDisplayItem();
 					}
 				});
 			}
 		});
 	}
 
-	protected void UpdateDisplayItem() {
+	protected void updateDisplayItem() {
 		System.out.println("ExternalView activeItemUpdate");
 		controlName.setText(activeItem.get().getName());
 		controlLink.setText(activeItem.get().getLink());
 		controlDescription.setText(activeItem.get().getDescription());
 		controlStackSize.getValueFactory().setValue(activeItem.get().getStackSize());
 		controlWeightValue.getValueFactory().setValue((double) activeItem.get().getWeight().getValue());
+		controlWeightValue.setEditable(true);
 		controlWeightUnit.setValue(activeItem.get().getWeight().getUnitsAbbreviation());
 		controlWeightScale.getValueFactory().setValue((double) activeItem.get().getContentsWeightScale());
 		controlExternalPoints.setItemCoordinates(activeItem.get().getExternalPoints());
@@ -107,7 +108,14 @@ public class DisplayItem extends StackPane {
 			saveButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					activeItem.set(getItemFromElements());
+					activeItem.get().setStackSize(controlStackSize.getValue());
+					activeItem.get().setName(controlName.getText());
+					activeItem.get().setLink(controlLink.getText());
+					activeItem.get().setDescription(controlDescription.getText());
+					activeItem.get().setWeight(ItemWeightFactory.GetWeight(controlWeightUnit.getValue(), controlWeightValue.getValue().floatValue()));
+					activeItem.get().setExternalPoints(controlExternalPoints.getItemCoordinates());
+					activeItem.get().setInternalPoints(controlInternalPoints.getItemCoordinates());
+					activeItem.set(activeItem.get());
 				}
 			});
 			buttonFooter.getChildren().add(saveButton);
@@ -119,7 +127,7 @@ public class DisplayItem extends StackPane {
 			resetButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					UpdateDisplayItem();
+					updateDisplayItem();
 				}
 			});
 			buttonFooter.getChildren().add(resetButton);

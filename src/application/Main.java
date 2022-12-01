@@ -173,6 +173,19 @@ public class Main extends Application {
 		contents.rootItemProperty().bindBidirectional(rootRpgItem);
 		contents.activeItemProperty().bindBidirectional(activeRpgItem);
 		root.setContent(contents);
+		
+		activeRpgItem.addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(Observable argb0) {
+				contents.updateTextTreeView();
+				activeRpgItem.get().addListener(new InvalidationListener() {
+					@Override
+					public void invalidated(Observable argb0) {
+						contents.updateTextTreeView();
+					}
+				});
+			}
+		});
 
 		Scene scene = new Scene(root);
 		textView.setScene(scene);
@@ -182,18 +195,18 @@ public class Main extends Application {
 	Stage makeEditView() {
 		Stage editView = new Stage();
 		editView.titleProperty().bind(Bindings.concat("Edit view of \"", activeRpgItem.get().nameProperty(), "\""));
-		rootRpgItem.addListener(new InvalidationListener() {
+		activeRpgItem.addListener(new InvalidationListener() {
 			@Override
 			public void invalidated(Observable arg0) {
 				editView.titleProperty()
-						.bind(Bindings.concat("Edit view of \"", rootRpgItem.get().nameProperty(), "\""));
+						.bind(Bindings.concat("Edit view of \"", activeRpgItem.get().nameProperty(), "\""));
 			}
 		});
 
 		ScrollPane root = new ScrollPane();
 		root.setFitToWidth(true);
-		DisplayItem contents = new DisplayItem(rootRpgItem.get());
-		contents.activeItemProperty().bindBidirectional(rootRpgItem);
+		DisplayItem contents = new DisplayItem(activeRpgItem.get());
+		contents.activeItemProperty().bindBidirectional(activeRpgItem);
 		root.setContent(contents);
 
 		Scene scene = new Scene(root);
