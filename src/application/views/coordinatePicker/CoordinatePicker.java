@@ -1,11 +1,14 @@
 package application.views.coordinatePicker;
 
+import java.util.ArrayList;
+
 import application.coordinate.Coordinate;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 public class CoordinatePicker extends StackPane {
-	private final ListProperty<Coordinate> itemCoordinates = new SimpleListProperty<Coordinate>();
+	private final ListProperty<Coordinate> itemCoordinates = new SimpleListProperty<Coordinate>(FXCollections.observableArrayList(new ArrayList<Coordinate>()));
 
 	public ObservableList<Coordinate> getItemCoordinates() {
 		return itemCoordinates.get();
@@ -61,7 +64,7 @@ public class CoordinatePicker extends StackPane {
 	}
 
 	protected void UpdateDisplayed() {
-		System.out.println("ExternalView activeItemUpdate");
+		System.out.println("CoordinatePicker activeItemUpdate");
 		GridPane contents = new GridPane();
 		for (int row = 0; row < gridHeight.get(); row++) {
 			for (int col = 0; col < gridWidth.get(); col++) {
@@ -69,16 +72,17 @@ public class CoordinatePicker extends StackPane {
 				final int frow = row;
 				final int fcol = col;
 				CheckBox cell = new CheckBox();
+				cell.setSelected(itemCoordinates.get().contains(new Coordinate(frow, fcol)));
 				cell.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent arg0) {
 						Coordinate cellCoord = new Coordinate(frow, fcol);
-						if (cell.isSelected()) {
-							// Change from selected to deselected
-							itemCoordinates.remove(cellCoord);
+						if (itemCoordinates.get().contains(cellCoord)) {
+							System.out.println("CP -- Removing point at (" + fcol +", " + frow + ")");
+							itemCoordinates.get().remove(cellCoord);
 						} else {
-							// Change from deselected to selected
-							itemCoordinates.add(cellCoord);
+							System.out.println("CP -- Adding point at (" + fcol +", " + frow + ")");
+							itemCoordinates.get().add(cellCoord);
 						}
 					}
 				});

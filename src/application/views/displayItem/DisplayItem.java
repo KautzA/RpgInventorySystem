@@ -95,8 +95,12 @@ public class DisplayItem extends StackPane {
 		controlWeightValue.setEditable(true);
 		controlWeightUnit.setValue(activeItem.get().getWeight().getUnitsAbbreviation());
 		controlWeightScale.getValueFactory().setValue((double) activeItem.get().getContentsWeightScale());
-		controlExternalPoints.setItemCoordinates(activeItem.get().getExternalPoints());
-		controlInternalPoints.setItemCoordinates(activeItem.get().getInternalPoints());
+		ObservableList<Coordinate> tempExternalPoints = FXCollections.observableArrayList();
+		tempExternalPoints.addAll(activeItem.get().getExternalPoints());
+		controlExternalPoints.setItemCoordinates(tempExternalPoints);
+		ObservableList<Coordinate> tempInternalPoints = FXCollections.observableArrayList();
+		tempInternalPoints.addAll(activeItem.get().getInternalPoints());
+		controlInternalPoints.setItemCoordinates(tempInternalPoints);
 	}
 
 	protected Node makeButtonFooter() {
@@ -113,8 +117,14 @@ public class DisplayItem extends StackPane {
 					activeItem.get().setLink(controlLink.getText());
 					activeItem.get().setDescription(controlDescription.getText());
 					activeItem.get().setWeight(ItemWeightFactory.GetWeight(controlWeightUnit.getValue(), controlWeightValue.getValue().floatValue()));
-					activeItem.get().setExternalPoints(controlExternalPoints.getItemCoordinates());
-					activeItem.get().setInternalPoints(controlInternalPoints.getItemCoordinates());
+					
+					ObservableList<Coordinate> tempExternalPoints = FXCollections.observableArrayList();
+					tempExternalPoints.addAll(controlExternalPoints.getItemCoordinates());
+					activeItem.get().setExternalPoints(tempExternalPoints);
+					ObservableList<Coordinate> tempInternalPoints = FXCollections.observableArrayList();
+					tempInternalPoints.addAll(controlInternalPoints.getItemCoordinates());
+					activeItem.get().setInternalPoints(tempInternalPoints);
+					
 					activeItem.set(activeItem.get());
 				}
 			});
