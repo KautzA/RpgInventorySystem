@@ -46,6 +46,8 @@ public class ReadOnlyView extends StackPane {
 	private TextField controlName = new TextField();
 	private TextField controlLink = new TextField();
 	private TextArea controlDescription = new TextArea();
+	
+
 	private Spinner<Integer> controlStackSize = new Spinner<Integer>(0, 20, 0, 1);
 	private Spinner<Double> controlWeightValue = new Spinner<Double>(0, 20, 1, 0.1);
 	private ComboBox<String> controlWeightUnit = new ComboBox<String>(weightUnits);
@@ -61,7 +63,7 @@ public class ReadOnlyView extends StackPane {
 		displayInternalView.activeItemProperty().bind(activeItem);
 		getChildren().add(rootPane);
 		rootPane.setPrefSize(200, 200);
-
+		controlDescription.setPrefSize(400, 200); ///change the size of description ym
 		Node itemDisplay = makeItemDisplay();
 		rootPane.setCenter(itemDisplay);
 

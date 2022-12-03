@@ -64,7 +64,13 @@ public class Main extends Application {
 			Stage editWindow = makeEditView();
 
 			VBox root = new VBox();
+			
+//			root.setStyle("-fx-background-color:rgb(28,24,19)");
 			HBox banner = new HBox();
+			
+			banner.setStyle("-fx-background-color:rgb(28,24,19)");
+			
+			
 			root.getChildren().add(banner);
 
 			{
@@ -140,10 +146,12 @@ public class Main extends Application {
 			// TODO: Replace this block with the view-only display
 			ReadOnlyView activeDisplay = new ReadOnlyView(activeRpgItem.get());
 			activeDisplay.activeItemProperty().bindBidirectional(activeRpgItem);
+			
 			root.setMargin(activeDisplay, new Insets(5, 5, 5, 5));
 			root.getChildren().add(activeDisplay);
+			activeDisplay.setStyle("-fx-background-color:rgb(242,238,218)");
 
-			Scene scene = new Scene(root, 400, 400);
+			Scene scene = new Scene(root, 350, 400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -152,6 +160,7 @@ public class Main extends Application {
 		}
 	}
 
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
