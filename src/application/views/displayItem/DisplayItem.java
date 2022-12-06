@@ -86,7 +86,7 @@ public class DisplayItem extends StackPane {
 	}
 
 	protected void updateDisplayItem() {
-		System.out.println("ExternalView activeItemUpdate");
+		System.out.println("DisplayItem update");
 		controlName.setText(activeItem.get().getName());
 		controlLink.setText(activeItem.get().getLink());
 		controlDescription.setText(activeItem.get().getDescription());
