@@ -38,7 +38,7 @@ public class ExternalView extends StackPane {
 		gridWidth = new SimpleIntegerProperty(10);
 		gridHeight = new SimpleIntegerProperty(10);
 		getChildren().add(rootPane);
-		rootPane.setPrefSize(200, 200);
+		rootPane.setPrefSize(150, 100); /// change the size of external view ym
 		UpdateExternalView();
 		activeItem.addListener(new InvalidationListener() {
 			@Override
