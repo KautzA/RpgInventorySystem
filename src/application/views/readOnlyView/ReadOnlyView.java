@@ -49,7 +49,7 @@ public class ReadOnlyView extends StackPane {
 	
 
 	private Spinner<Integer> controlStackSize = new Spinner<Integer>(0, 20, 0, 1);
-	private Spinner<Double> controlWeightValue = new Spinner<Double>(0, 20, 1, 0.1);
+	private Spinner<Double> controlWeightValue = new Spinner<Double>(0, 1000, 1, 0.1);
 	private ComboBox<String> controlWeightUnit = new ComboBox<String>(weightUnits);
 	private Spinner<Double> controlWeightScale = new Spinner<Double>(0, 2, 1, 0.25);
 	private ExternalView displayExternalView;
